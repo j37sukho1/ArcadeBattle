@@ -261,10 +261,10 @@ async function startServer() {
       const resp = await fetch('https://docs.google.com/spreadsheets/d/1FM6pUWt414vao1ePQps_D5KeXOFeg5UcZJFU2y5ox1o/gviz/tq?tqx=out:csv');
       const csv = await resp.text();
       // Simple parse
-      const lines = csv.split('\\n');
+      const lines = csv.split(/\r?\n/);
       let found = false;
       for (let i = 1; i < lines.length; i++) {
-        let cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, ''));
+        let cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
         if (cols[1] === id && cols[2] === pw) {
           found = true;
           break;

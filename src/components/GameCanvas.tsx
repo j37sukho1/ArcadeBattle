@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AudioSynther } from './AudioSynther';
+import { LogOut } from 'lucide-react';
 
 interface PlayerData {
   id: string;
@@ -51,7 +52,7 @@ interface VisualEffect {
 
 const Audio = new AudioSynther();
 
-export default function GameCanvas({ username }: { username: string }) {
+export default function GameCanvas({ username, onLogout }: { username: string; onLogout: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ws, setWs] = useState<WebSocket | null>(null);
   const stateRef = useRef<GameState | null>(null);
@@ -280,10 +281,19 @@ export default function GameCanvas({ username }: { username: string }) {
   return (
     <div className="w-full min-h-screen bg-slate-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-950 to-slate-950 flex flex-col items-center justify-center p-4 sm:p-8">
       
-      {/* Title */}
-      <h2 className="text-xl sm:text-2xl font-bold tracking-widest text-indigo-400 uppercase mb-6 drop-shadow-[0_0_10px_rgba(99,102,241,0.8)]">
-        Arcade Clash <span className="text-slate-500 font-normal">|</span> Stage 1
-      </h2>
+      {/* Header Container */}
+      <div className="flex justify-between items-center w-full max-w-[840px] mb-6 px-2 sm:px-0">
+        <h2 className="text-xl sm:text-2xl font-bold tracking-widest text-indigo-400 uppercase drop-shadow-[0_0_10px_rgba(99,102,241,0.8)]">
+          Arcade Clash <span className="text-slate-500 font-normal">|</span> Stage 1
+        </h2>
+        <button 
+          onClick={onLogout}
+          className="flex items-center gap-2 bg-slate-800 hover:bg-rose-900/50 text-slate-300 hover:text-rose-400 border border-slate-700 hover:border-rose-500/50 px-4 py-2 rounded-lg transition-colors text-sm font-bold tracking-wide"
+        >
+          <LogOut size={16} />
+          EXIT
+        </button>
+      </div>
 
       {/* Arcade Monitor Bezel */}
       <div className="relative p-3 sm:p-5 bg-slate-800 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_4px_20px_rgba(255,255,255,0.05)] border border-slate-700/50 w-full max-w-[840px]">

@@ -31,8 +31,15 @@ export default function App() {
     }
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername('');
+    setId('');
+    setPassword('');
+  };
+
   if (isLoggedIn) {
-    return <GameCanvas username={username} />;
+    return <GameCanvas username={username} onLogout={handleLogout} />;
   }
 
   return (
